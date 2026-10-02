@@ -229,6 +229,25 @@ Start a conversation with Claude and try:
 - **Read-only API** - Cannot modify lineups (Sleeper limitation)
 - **Real-time Data** - Always current information
 
+### Request path
+
+MCP requests arrive over stdio. Tool handlers use the read-only Sleeper API client,
+which keeps player data in a local 24-hour cache. Player-status research follows a
+separate web-search path.
+
+```text
+MCP host
+   | stdio
+   v
+MCP server -> tools -> handlers -> Sleeper client <-> Sleeper API
+                            |             |
+                            |             +-- local player cache (24h)
+                            +-- injury-status research -> web search
+```
+
+See the [server](src/index.ts), [tool schemas](src/tools.ts),
+[handlers](src/handlers.ts), and [Sleeper client](src/sleeper-client.ts).
+
 ## 🔧 Development
 
 ### For Users

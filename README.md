@@ -7,6 +7,8 @@
 
 A comprehensive Model Context Protocol (MCP) Server for integrating with Sleeper Fantasy Football. This server enables AI assistants like Claude to perform advanced fantasy football analysis and provide strategic recommendations.
 
+**Current implementation:** Sleeper API calls are read-only, and player data may come from a 24-hour local cache. `research_player_status` returns Sleeper status fields plus mock web-search strings; it does not retrieve or verify news reports. Lineup projections and recommendations use simple rank/injury heuristics. Treat the inherited [usage examples](EXAMPLES.md) as hypothetical illustrations, and verify current player news and league-wide availability separately before acting on suggestions.
+
 ## 📦 Installation
 
 ```bash
@@ -232,8 +234,8 @@ Start a conversation with Claude and try:
 ### Request path
 
 MCP requests arrive over stdio. Tool handlers use the read-only Sleeper API client,
-which keeps player data in a local 24-hour cache. Player-status research follows a
-separate web-search path.
+which keeps player data in a local 24-hour cache. Player-status research reads
+Sleeper status fields and appends placeholder search results.
 
 ```text
 MCP host
@@ -242,7 +244,7 @@ MCP host
 MCP server -> tools -> handlers -> Sleeper client <-> Sleeper API
                             |             |
                             |             +-- local player cache (24h)
-                            +-- injury-status research -> web search
+                            +-- injury-status research -> mock search strings
 ```
 
 See the [server](src/index.ts), [tool schemas](src/tools.ts),

@@ -2,6 +2,10 @@
 
 This document provides comprehensive examples of how to use the Sleeper MCP Server with AI assistants.
 
+**Example scope:** The inherited responses and conversations below are hypothetical illustrations, not recorded tool runs or verified reporting. IDs, seasons, scores, counts, player statuses, and team affiliations are sample values; use your actual identifiers and the requested season when calling tools. The news quotations attributed to ESPN and SF Chronicle and the 70% play estimate are unsupported sample text, not sourced quotations or a measured probability.
+
+In the current implementation, `research_player_status` reads Sleeper player fields and returns mock `web_research` strings without making a web search. Lineup points and recommendations are rank/injury heuristics, not matchup forecasts. `get_waiver_suggestions` excludes players on your own roster but does not establish availability across all league rosters. For a feasible weekly workflow, retrieve your league and roster, confirm the week with `get_nfl_state`, inspect status and trend fields, then check current injury reporting and all league rosters before making a decision. See the [handlers](src/handlers.ts) for the implemented mechanics.
+
 ## Setup Examples
 
 ### 1. Finding Your User Information
